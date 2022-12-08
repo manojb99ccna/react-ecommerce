@@ -1,5 +1,6 @@
 import logo from './../assets/images/logo/logo.png';
 import React, { Component } from 'react';
+import Navigation from './Navigation';
 
 
 export default function Header() {
@@ -7,6 +8,9 @@ export default function Header() {
 
   return (
     <>
+
+    <Navigation></Navigation>
+
         <header id="cod__header" className="cod__header__area header--one">
         
         <div id="sticky-header-with-topbar" className="mainmenu__wrap sticky__header">
@@ -28,6 +32,7 @@ export default function Header() {
                                     <li><a href="/">Products</a></li> 
                                     <li><a href="/">contact</a></li>
                                 </ul>
+
                             </nav>
 
                             
