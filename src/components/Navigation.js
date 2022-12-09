@@ -4,11 +4,13 @@ import { Navbar,Container } from 'react-bootstrap';
 
 export default function Navigation() {
   return (
-    <>
-   
-   <Link className="nav-link" to="about">About</Link>   
-    
-    
+      <>
+
+      <li className=""> <Link className="" to="/">Home</Link> </li>
+      <li className=""> <Link className="" to="about">About</Link>   </li>
+      <li><Link className="" to="contact">Contact</Link> </li>
+
+
     </>
   )
 }

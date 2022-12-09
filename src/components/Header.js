@@ -1,6 +1,7 @@
 import logo from './../assets/images/logo/logo.png';
 import React, { Component } from 'react';
 import Navigation from './Navigation';
+import { Link } from 'react-router-dom';
 
 
 export default function Header() {
@@ -9,7 +10,7 @@ export default function Header() {
   return (
     <>
 
-    <Navigation></Navigation>
+    
 
         <header id="cod__header" className="cod__header__area header--one">
         
@@ -19,18 +20,15 @@ export default function Header() {
                     <div className="menumenu__container clearfix">
                         <div className="col-lg-2 col-md-2 col-sm-3 col-xs-5"> 
                             <div className="logo">
-                                <a href="">
+                                <Link className="" to="/">
                                     <img alt="avatar" src={logo} className={''} />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="col-md-7 col-lg-8 col-sm-5 col-xs-3">
                             <nav className="main__menu__nav hidden-xs hidden-sm">
                                 <ul className="main__menu">
-                                    <li className=""><a href="/">Home</a></li>
-                                    <li><a href="/">About</a></li> 
-                                    <li><a href="/">Products</a></li> 
-                                    <li><a href="/">contact</a></li>
+                                     <Navigation /> 
                                 </ul>
 
                             </nav>
@@ -39,10 +37,8 @@ export default function Header() {
                             <div className="mobile-menu clearfix visible-xs visible-sm">
                                 <nav id="mobile_dropdown">
                                     <ul>
-                                        <li className=""><a href="">Home</a></li>
-                                        <li><a href="/">About</a></li>
-                                        <li><a href="/">Products</a></li>   
-                                        <li><a href="/">contact</a></li>
+                                    <Navigation /> 
+                                       
                                     </ul>
                                 </nav>
                             </div>  
