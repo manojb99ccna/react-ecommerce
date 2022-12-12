@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import About from './pages/About';
 import Product from './pages/Product';
 import Contact from './pages/Contact';
+import Home from './pages/Home';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   return (
@@ -16,17 +18,16 @@ function App() {
 	<BrowserRouter>
 
 	<Header/> 
-	
-
 	<Routes> 
-        <Route path="/"  element={<Product/>} />
+		<Route path="/"  element={<Home/>} />
+		<Route path="product"  element={<Product/>} />
         <Route path="about" element={<About/>} />
 		<Route path="contact" element={<Contact/>} />
-      </Routes>
-	  
-	</BrowserRouter> 
+		<Route path="product/:slug" element={<ProductDetails />} />	
+      </Routes> 
+	 <Footer/>
 
-	<Footer/>
+	</BrowserRouter> 
 	</>
   );
 }

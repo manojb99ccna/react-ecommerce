@@ -1,9 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Client } from "../api/Client";
+import { Endpoint } from "../Events/Endpoint";
+import { isEmptyArray } from "../utility/Utility";
 import banner_image from "./../assets/images/backgound.jpg";
-import product_image from "./../assets/images/product/product-1.jpg";
+import ProductItem from "./ProductItem";
 
-export default function Product() {
+
+function Product(props) {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState( 9 );
+	const [loading, setLoading]       = useState( false );
+	const [errMessage, setError]      = useState( '' );
+	const [posts, setPosts]           = useState( '' );
+
+
+  useEffect( () => { 
+
+    const url = Endpoint.GET_PRODUCT_LISTING +`?page=${ currentPage }&per_page=${totalPages}`; 
+    console.log(url);
+
+    Client.getWithLoader(url,(response) => { 
+      console.log("response",response.data); 
+      setPosts( response.data ); 
+
+    },
+    (error) => {
+      setError( 'No posts found' );
+    }
+  );
+      
+
+
+  }, [currentPage] );
+
+
+
+  console.log("data: ", posts); 
+
+
+
   return (
     <>
       <div
@@ -38,6 +75,7 @@ export default function Product() {
       <section className="product__grid_category">
         <div className="container">
           <div className="row">
+
             <div
               className="col-12 col-md-4 col-lg-3 display-none-md"
               id="filters"
@@ -335,47 +373,24 @@ export default function Product() {
             <div className="col-12 col-md-12 col-lg-9 ">
               <div className="row">
                 <div id="allproduct" className="">
-                  <div className="col-md-4 col-sm-6">
-                    <div className="product-grid">
-                      <div className="product-image">
-                        <a href="#">
-                          <img className="pic-1" src={product_image} />
-                        </a>
-                        <ul className="social">
-                          <li>
-                            <a href="" data-tip="View Details">
-                              <i className="fa fa-search"></i>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="" data-tip="Add to Wishlist">
-                              <i className="fa fa-shopping-bag"></i>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="" data-tip="Add to Cart">
-                              <i className="fa fa-shopping-cart"></i>
-                            </a>
-                          </li>
-                        </ul>
-                        <span className="product-new-label">Sale</span>
-                        <span className="product-discount-label">20%</span>
-                      </div>
 
-                      <div className="product-content">
-                        <h3 className="title">
-                          <a href="#">Women's Blouse</a>
-                        </h3>
-                        <div className="price">
-                          $16.00
-                          <span>$20.00</span>
-                        </div>
-                        <a className="add-to-cart" href="">
-                          + Add To Cart
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                
+                 
+                {!isEmptyArray(posts) ?  
+                  <>
+                  {posts.map((value, key) => ( 
+
+                  <> <ProductItem data={value} key={key} /></>
+
+                  ))}
+                  </>                  
+                :
+                <><h3 className="text-center alert">No product found</h3></>
+                
+                } 
+                
+
+
                 </div>
               </div>
             </div>
@@ -385,3 +400,4 @@ export default function Product() {
     </>
   );
 }
+export default Product;

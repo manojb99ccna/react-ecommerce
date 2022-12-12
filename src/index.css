@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.loading--spinner {
+  position: fixed; 
+  left: 50%; 
+  top: 50%; 
+  z-index: 4;
+  background-color: #ffffff;
+  padding: 10px;
+}
+.seperator {
+  height: 1.2em;
+  border-right: 2px solid #c3c1bf;
+}
+.min-height-1{
+  min-height: 760px;
+}
