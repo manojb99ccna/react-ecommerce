@@ -23,12 +23,12 @@ function ProductItem(props) {
                           </li>
 
                           <li>
-                            <a href="javascript:;" data-tip="Add to Wishlist">
+                            <a  data-tip="Add to Wishlist">
                               <i className="fa fa-shopping-bag"></i>
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:;" data-tip="Add to Cart">
+                            <a  data-tip="Add to Cart">
                               <i className="fa fa-shopping-cart"></i>
                             </a>
                           </li>

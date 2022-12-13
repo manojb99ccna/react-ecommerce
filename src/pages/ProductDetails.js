@@ -1,14 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import banner_image from "./../assets/images/backgound.jpg";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { Container } from 'react-bootstrap';
+import { Endpoint } from '../Events/Endpoint';
+import { Client } from '../api/Client';
+import { isEmptyArray } from '../utility/Utility';
+import ProductItemDetails from './ProductItemDetails';
 
 function ProductDetails() {
 
-  
   const { slug } = useParams();
+  
+	const [errMessage, setError]      = useState( '' );
+	const [posts, setPosts]           = useState( '' );
  
   console.log("slug = ",slug);
+  
+  useEffect( () => { 
+    const url = Endpoint.GET_PRODUCT_LISTING +`?slug=${ slug }`; 
+    console.log(url);
 
+    Client.getWithLoader(url,(response) => { 
+      console.log("response",response.data); 
+      setPosts( response.data ); 
+
+    },
+    (error) => {
+      setError( 'No posts found' );
+    }
+  ); 
+  },[]);  
 
   
   return (
@@ -42,7 +63,25 @@ function ProductDetails() {
         </div>
       </div>
 
+      <Container className='main-container'>
 
+      {!isEmptyArray(posts) ? 
+
+      <div className="card">
+        <>
+        {posts.map((value, key) => ( 
+
+         <ProductItemDetails data={value} key={key} /> 
+
+        ))}
+        </>   
+      </div> 
+
+        : <div className='row'><h3 className='col-sm-12 alert text-center border-danger text-danger '>No product found</h3></div>  
+      
+      }
+
+      </Container>  
 
     
     

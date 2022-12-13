@@ -17,6 +17,7 @@ function Product(props) {
 
 
   useEffect( () => { 
+    console.log("\n useEffect");
 
     const url = Endpoint.GET_PRODUCT_LISTING +`?page=${ currentPage }&per_page=${totalPages}`; 
     console.log(url);
@@ -29,17 +30,11 @@ function Product(props) {
     (error) => {
       setError( 'No posts found' );
     }
-  );
-      
+  ); 
 
+  }, [currentPage] ); 
 
-  }, [currentPage] );
-
-
-
-  console.log("data: ", posts); 
-
-
+ 
 
   return (
     <>
@@ -102,7 +97,7 @@ function Product(props) {
               <div className="side-bar side-bar--filter" attr-val="category">
                 <div>
                   <a
-                    href="javascript:;"
+                    
                     className="filter-opt button"
                     attr-title="filter-category"
                   >
@@ -208,7 +203,7 @@ function Product(props) {
               <div className="side-bar side-bar--filter" attr-val="price">
                 <div>
                   <a
-                    href="javascript:;"
+                     
                     className="filter-opt button"
                     attr-title="filter-price"
                   >
@@ -296,7 +291,7 @@ function Product(props) {
               <div className="side-bar side-bar--filter" attr-val="discount">
                 <div>
                   <a
-                    href="javascript:;"
+                     
                     className="filter-opt button"
                     attr-title="filter-discount"
                   >
@@ -380,7 +375,7 @@ function Product(props) {
                   <>
                   {posts.map((value, key) => ( 
 
-                  <> <ProductItem data={value} key={key} /></>
+                   <ProductItem data={value} key={key} /> 
 
                   ))}
                   </>                  
