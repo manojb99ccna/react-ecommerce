@@ -12,7 +12,8 @@ function ProductDetails() {
   const { slug } = useParams();
   
 	const [errMessage, setError]      = useState( '' );
-	const [posts, setPosts]           = useState( '' );
+	const [posts, setPosts]           = useState([]);
+  const [postStatus, setPostStatus]      = useState(false);
  
   console.log("slug = ",slug);
   
@@ -23,9 +24,11 @@ function ProductDetails() {
     Client.getWithLoader(url,(response) => { 
       console.log("response",response.data); 
       setPosts( response.data ); 
+      setPostStatus(true);
 
     },
     (error) => {
+      setPostStatus(true);
       setError( 'No posts found' );
     }
   ); 
@@ -35,7 +38,7 @@ function ProductDetails() {
   return (
     <>
     <div
-        className="cod__bradcaump__area"
+        className="cod__bradcaump__area mb-5"
         style={{
           backgroundImage: `url(${banner_image})`,
           backgroundRepeat: "no-repeat",
@@ -65,7 +68,9 @@ function ProductDetails() {
 
       <Container className='main-container'>
 
-      {!isEmptyArray(posts) ? 
+        {(postStatus === true) && 
+
+       (!isEmptyArray(posts)) ? 
 
       <div className="card">
         <>
@@ -77,9 +82,10 @@ function ProductDetails() {
         </>   
       </div> 
 
-        : <div className='row'><h3 className='col-sm-12 alert text-center border-danger text-danger '>No product found</h3></div>  
+        : <div className='row'><h3 className='col-sm-12 alert text-center border-danger text-danger '>No product details found</h3></div>  
       
       }
+    
 
       </Container>  
 

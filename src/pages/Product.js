@@ -9,37 +9,74 @@ import ProductItem from "./ProductItem";
 
 function Product(props) {
 
+  const [currentPageCat, setCurrentPageCat] = useState(1);
+  const [totalPagesCat, setTotalPagesCat] = useState( 20 );
+  const [categoryFilter, setCategoryFilter]           = useState([]);
+  
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState( 9 );
-	const [loading, setLoading]       = useState( false );
+  const [totalPages, setTotalPages] = useState( 9 ); 
 	const [errMessage, setError]      = useState( '' );
 	const [posts, setPosts]           = useState( '' );
 
+  const inputRef = React.createRef();
 
   useEffect( () => { 
-    console.log("\n useEffect");
+    console.log("\n useEffect"); 
 
+    filterSidebar(); 
+    filterProduct();
+
+  }, [currentPage] ); 
+
+  function filterSidebar(){   
+
+    const url = Endpoint.GET_CATEGORY_LISTING_FILTER +`?page=${ currentPageCat }&per_page=${totalPagesCat}`; 
+    console.log(url);
+
+    Client.getWithLoader(url,(response) => { 
+        console.log("category response",response.data); 
+        setCategoryFilter( response.data ); 
+      },
+      (error) => {
+        setCategoryFilter([]); 
+      }
+    ); 
+
+  }
+
+  const onChange = event => {
+    console.log("onChange :",inputRef);
+
+    let { value } = event.target;
+
+    console.log("onChange event :",event);
+    console.log("onChange value :",value);
+
+
+  }
+
+  function filterProduct(){   
+    
     const url = Endpoint.GET_PRODUCT_LISTING +`?page=${ currentPage }&per_page=${totalPages}`; 
     console.log(url);
 
     Client.getWithLoader(url,(response) => { 
-      console.log("response",response.data); 
-      setPosts( response.data ); 
+        console.log("response",response.data); 
+        setPosts( response.data ); 
 
-    },
-    (error) => {
-      setError( 'No posts found' );
-    }
-  ); 
-
-  }, [currentPage] ); 
-
+      },
+      (error) => {
+        setError( 'No posts found' );
+      }
+    ); 
+    
+   } 
  
 
   return (
     <>
       <div
-        className="cod__bradcaump__area"
+        className="cod__bradcaump__area mb-5"
         style={{
           backgroundImage: `url(${banner_image})`,
           backgroundRepeat: "no-repeat",
@@ -82,11 +119,14 @@ function Product(props) {
                     className="form-control"
                     placeholder="Search ..."
                     aria-label="Search for..."
+                    ref={inputRef} 
+                    name="searchTxt"
                   />
                   <span className="input-group-btn">
                     <button
                       className="btn btn-secondary wd-btn-search"
                       type="button"
+                       onClick={onChange}
                     >
                       <i className="fa fa-search" aria-hidden="true"></i>
                     </button>
@@ -107,262 +147,30 @@ function Product(props) {
                 <br />
                 <h5 className="title">Category</h5>
                 <div className="div-con-filter">
-                  <p className="col-category  finder-page ">
+                {!isEmptyArray(categoryFilter) && 
+
+                  categoryFilter.map((value, key) => ( 
+                  <p key={key} className="col-category  finder-page ">
                     <label>
                       <input
+                        ref={inputRef}
+                        onChange={onChange}
                         id="category_1"
-                        name="filter_category"
+                        name="filter_category[]"
                         type="checkbox"
-                        value="1"
+                        value={value.id}
                         className="filter-category"
-                      />{" "}
-                      Fruits & Vegetables
+                      />{" "} {value.name}
                     </label>
                   </p>
+                   ))
 
-                  <p className="col-category  finder-page ">
-                    <label>
-                      <input
-                        id="category_2"
-                        name="filter_category"
-                        type="checkbox"
-                        value="2"
-                        className="filter-category"
-                      />{" "}
-                      Breakfast
-                    </label>
-                  </p>
-
-                  <p className="col-category  finder-page ">
-                    <label>
-                      <input
-                        id="category_3"
-                        name="filter_category"
-                        type="checkbox"
-                        value="3"
-                        className="filter-category"
-                      />{" "}
-                      Grocery
-                    </label>
-                  </p>
-
-                  <p className="col-category  finder-page ">
-                    <label>
-                      <input
-                        id="category_4"
-                        name="filter_category"
-                        type="checkbox"
-                        value="4"
-                        className="filter-category"
-                      />{" "}
-                      Household
-                    </label>
-                  </p>
-
-                  <p className="col-category  finder-page ">
-                    <label>
-                      <input
-                        id="category_5"
-                        name="filter_category"
-                        type="checkbox"
-                        value="5"
-                        className="filter-category"
-                      />{" "}
-                      Personal Care
-                    </label>
-                  </p>
-
-                  <p className="col-category  finder-page ">
-                    <label>
-                      <input
-                        id="category_6"
-                        name="filter_category"
-                        type="checkbox"
-                        value="6"
-                        className="filter-category"
-                      />{" "}
-                      Confectionary
-                    </label>
-                  </p>
-
-                  <p className="col-category  finder-page ">
-                    <label>
-                      <input
-                        id="category_7"
-                        name="filter_category"
-                        type="checkbox"
-                        value="7"
-                        className="filter-category"
-                      />{" "}
-                      Beverages
-                    </label>
-                  </p>
+                }
+ 
                 </div>
-              </div>
+              </div> 
+               
 
-              <div className="side-bar side-bar--filter" attr-val="price">
-                <div>
-                  <a
-                     
-                    className="filter-opt button"
-                    attr-title="filter-price"
-                  >
-                    Clear filter
-                  </a>
-                </div>
-                <br />
-                <h5 className="title">Price</h5>
-                <div className="div-con-filter">
-                  <p className="col-price  finder-page ">
-                    <label>
-                      <input
-                        id="price_1"
-                        name="filter_price"
-                        type="checkbox"
-                        value="0-20"
-                        className="filter-price"
-                      />{" "}
-                      Less than Rs 20{" "}
-                    </label>
-                  </p>
-                  <p className="col-price  finder-page ">
-                    <label>
-                      <input
-                        id="price_2"
-                        name="filter_price"
-                        type="checkbox"
-                        value="21-50"
-                        className="filter-price"
-                      />{" "}
-                      Rs 21 to Rs 50{" "}
-                    </label>
-                  </p>
-                  <p className="col-price  finder-page ">
-                    <label>
-                      <input
-                        id="price_3"
-                        name="filter_price"
-                        type="checkbox"
-                        value="51-100"
-                        className="filter-price"
-                      />{" "}
-                      Rs 51 to Rs 100{" "}
-                    </label>
-                  </p>
-                  <p className="col-price  finder-page ">
-                    <label>
-                      <input
-                        id="price_4"
-                        name="filter_price"
-                        type="checkbox"
-                        value="101-200"
-                        className="filter-price"
-                      />{" "}
-                      Rs 101 to Rs 200{" "}
-                    </label>
-                  </p>
-                  <p className="col-price  finder-page ">
-                    <label>
-                      <input
-                        id="price_5"
-                        name="filter_price"
-                        type="checkbox"
-                        value="201-500"
-                        className="filter-price"
-                      />{" "}
-                      Rs 201 to Rs 500{" "}
-                    </label>
-                  </p>
-                  <p className="col-price  finder-page ">
-                    <label>
-                      <input
-                        id="price_6"
-                        name="filter_price"
-                        type="checkbox"
-                        value="501-900000"
-                        className="filter-price"
-                      />{" "}
-                      More than Rs 501{" "}
-                    </label>
-                  </p>
-                </div>
-              </div>
-
-              <div className="side-bar side-bar--filter" attr-val="discount">
-                <div>
-                  <a
-                     
-                    className="filter-opt button"
-                    attr-title="filter-discount"
-                  >
-                    Clear filter
-                  </a>
-                </div>
-                <br />
-                <h5 className="title">Discount</h5>
-                <div className="div-con-filter">
-                  <p className="col-discount  finder-page ">
-                    <label>
-                      <input
-                        id="discount_1"
-                        name="filter_discount"
-                        type="checkbox"
-                        value="1-5"
-                        className="filter-discount"
-                      />{" "}
-                      Upto 5%{" "}
-                    </label>
-                  </p>
-                  <p className="col-discount  finder-page ">
-                    <label>
-                      <input
-                        id="discount_2"
-                        name="filter_discount"
-                        type="checkbox"
-                        value="5-10"
-                        className="filter-discount"
-                      />{" "}
-                      5% - 10%{" "}
-                    </label>
-                  </p>
-                  <p className="col-discount  finder-page ">
-                    <label>
-                      <input
-                        id="discount_3"
-                        name="filter_discount"
-                        type="checkbox"
-                        value="10-15"
-                        className="filter-discount"
-                      />{" "}
-                      10% - 15%{" "}
-                    </label>
-                  </p>
-                  <p className="col-discount  finder-page ">
-                    <label>
-                      <input
-                        id="discount_4"
-                        name="filter_discount"
-                        type="checkbox"
-                        value="15-20"
-                        className="filter-discount"
-                      />{" "}
-                      15% - 20%{" "}
-                    </label>
-                  </p>
-                  <p className="col-discount  finder-page ">
-                    <label>
-                      <input
-                        id="discount_5"
-                        name="filter_discount"
-                        type="checkbox"
-                        value="25-100"
-                        className="filter-discount"
-                      />{" "}
-                      More than 25%{" "}
-                    </label>
-                  </p>
-                </div>
-              </div>
             </div>
 
             <div className="col-12 col-md-12 col-lg-9 ">

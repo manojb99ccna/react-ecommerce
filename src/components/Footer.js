@@ -3,7 +3,7 @@ import React from 'react'
 export default function Footer() {
   return (
     <>
-    <footer id="cod__footer">
+    <footer id="cod__footer" className='mt-5'>
 		
 			 
          <div className="cod__copyright bg__cat--5">

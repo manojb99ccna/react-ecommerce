@@ -33,8 +33,12 @@ function ProductItem(props) {
                             </a>
                           </li>
                         </ul>
+                         {/*                         
                         <span className="product-new-label">Sale</span>
                         <span className="product-discount-label">20%</span>
+                         */}
+
+
                       </div>
 
                       <div className="product-content">
@@ -42,10 +46,13 @@ function ProductItem(props) {
                         <Link  to={"/product/"+data.slug}  className="" >   {data.name} </Link>
                         </h3>
                         <div className="price">
-                          $16.00
-                          <span>$20.00</span>
+                        INR {data.price}
+
+                          {(data.regular_price) && <><span>INR {data.regular_price}</span></> }
+                          
+
                         </div>
-                        <a className="add-to-cart" href="">
+                        <a className="add-to-cart">
                           + Add To Cart
                         </a>
                       </div>

@@ -12,7 +12,7 @@ export default function Header() {
 
     
 
-        <header id="cod__header" className="cod__header__area header--one">
+        <header id="cod__header" className="cod__header__area header--one ">
         
         <div id="sticky-header-with-topbar" className="mainmenu__wrap sticky__header">
             <div className="container">

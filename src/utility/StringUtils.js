@@ -39,8 +39,11 @@ const StringUtils = {
     },
     isAlphaNumeric: function (str) {
         return /\d/.test(str);
-    }
+    },
+    removeHtmlTags: function (str) {
 
+        return (str.replace(/(<([^>]+)>)/ig, ''));
+    }
 
 }
 
