@@ -46,11 +46,11 @@ export default function Header() {
                         <div className="col-md-3 col-lg-2 col-sm-4 col-xs-4">
                             <div className="header__right"> 
                                 <div className="header__account">
-                                    <a href="#" data-toggle="modal" data-target="#loginModal" ><i className="icon-user icons"></i></a>
+                                    <a ><i className="icon-user icons"></i></a>
                                 </div>
                                 <div className="cod__shopping__cart">
-                                    <a className="cart__menu" href="#"><i className="icon-handbag icons"></i></a>
-                                    <a className="cart__menu" href="#"><span className="cod__qua">2</span></a>
+                                    <a className="cart__menu" ><i className="icon-handbag icons"></i></a>
+                                    <a className="cart__menu" ><span className="cod__qua">2</span></a>
                                 </div>
                             </div>
                         </div>
