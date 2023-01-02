@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addCartProduct, calculateTax, getCartCount, getSubTotal, getTotalAmount } from "../features/useCartSlice";
 import StringUtils from "../utility/StringUtils";
 import { isEmptyArray } from "../utility/Utility";
 
@@ -26,6 +28,23 @@ class ProductItemDetails extends React.Component {
     this.setState({ MainImage: (e.target.src) ? e.target.src : null  });
 
   }
+
+  addToCart = (item) => {
+    
+   let productObj = {
+     id: item.id,
+     name: item.name,
+     price: item.price,
+     image: !isEmptyArray(this.state.ProductDetails.images) ? this.state.ProductDetails.images[0].src : '',
+     slug: item.slug,
+   }
+   
+   useDispatch(addCartProduct(productObj));
+   useDispatch(getCartCount());
+   useDispatch(getSubTotal());
+   useDispatch(calculateTax());
+   useDispatch(getTotalAmount()); 
+ }
 
   render() {
     return (
@@ -67,7 +86,9 @@ class ProductItemDetails extends React.Component {
                  
                     <div className="buttons d-flex flex-row mt-5 gap-3">  
                     <button className="btn btn-outline-dark btn-lg ">Add to Wishlist</button> 
-                    <button className="btn btn-dark btn-lg">Add to Cart</button>  
+                    <button className="btn btn-dark btn-lg" onClick={() => {
+                  this.addToCart(this.state.ProductDetails)
+                }} >Add to Cart</button>  
                     </div>
  
                 </div>

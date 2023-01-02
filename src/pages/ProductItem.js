@@ -2,8 +2,7 @@ import React from 'react';
 import { isEmptyArray } from '../utility/Utility';
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { addCartProduct, calculateTax, getCartCount, getSubTotal, getTotalAmount } from '../features/useCartSlice';
-import { useGetProductsQuery } from '../features/apiSlice';
+import { addCartProduct, calculateTax, getCartCount, getSubTotal, getTotalAmount } from '../features/useCartSlice'; 
 
 function ProductItem(props) {
   let data = props.data; 
@@ -37,14 +36,7 @@ function ProductItem(props) {
     dispatch(getTotalAmount()); 
   }
 
-  const {
-    data: products,
-    isLoading: isProductLoading,
-    isSuccess: isProductSuccess,
-    isError: isProductError,
-    error: prouctError,
-  } = useGetProductsQuery({ refetchOnMountOrArgChange: true })
-
+  
 
   return (
     <>

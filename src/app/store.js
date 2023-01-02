@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { combineReducers } from '@reduxjs/toolkit'
-import { apiSlice } from '../features/apiSlice'
+ 
 import useCartReducer from '../features/useCartSlice'
 
 import storage from 'redux-persist/lib/storage'
@@ -24,8 +24,7 @@ const persistConfig = {
 }
 
 export const rootReducers = combineReducers({
-  cart: useCartReducer,
-  [apiSlice.reducerPath]: apiSlice.reducer,
+  cart: useCartReducer 
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)
@@ -37,7 +36,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(apiSlice.middleware),
+    }),
 })
 
 setupListeners(store.dispatch)
