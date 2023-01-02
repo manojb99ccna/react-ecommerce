@@ -7,9 +7,9 @@ export default function Navigation() {
       <>
 
       <li className=""> <Link className="" to="/">Home</Link> </li>
-      <li className=""> <Link className="" to="product">Product</Link>   </li>
-      <li className=""> <Link className="" to="about">About</Link>   </li>
-      <li><Link className="" to="contact">Contact</Link> </li>
+      <li className=""> <Link className="" to="/product">Product</Link>   </li>
+      <li className=""> <Link className="" to="/about">About</Link>   </li>
+      <li><Link className="" to="/contact">Contact</Link> </li>
 
 
     </>

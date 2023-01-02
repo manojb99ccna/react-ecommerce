@@ -70,30 +70,31 @@ export default function Header() {
 
     {(isMiniCartShow) &&  
     <>
-    <div class="body__overlay is-visible" onClick={()=>{  setIsMiniCartShow(false);   }} ></div>
-    <div class="shopping__cart shopping__cart__on">
-        <div class="shopping__cart__inner">
-            <div class="offsetmenu__close__btn">
-                <a href="#"><i class="zmdi zmdi-close"></i></a>
+    <div className="body__overlay is-visible" onClick={()=>{  setIsMiniCartShow(false);   }} ></div>
+    <div className="shopping__cart shopping__cart__on">
+        <div className="shopping__cart__inner">
+            <div className="offsetmenu__close__btn">
+                <a href="#"><i className="zmdi zmdi-close"></i></a>
             </div>
-            <div class="shp__cart__wrap">
+            {!isEmptyArray(cartItems) ? <>
+            <div className="shp__cart__wrap">
                 
-                 {!isEmptyArray(cartItems) &&  
+                { 
 
                     cartItems.map((product, index) => {
                         return (
-                            <div class="shp__single__product">
-                                <div class="shp__pro__thumb">
+                            <div className="shp__single__product">
+                                <div className="shp__pro__thumb">
                                     <a href="#">
                                         <img src={product.image} alt={product.name} />
                                     </a>
                                 </div>
-                                <div class="shp__pro__details">
+                                <div className="shp__pro__details">
                                     <h2><a href="product-details.php">{product.name}</a></h2>
-                                    <span class="quantity">QTY: {product.quantity}</span>
-                                    <span class="shp__price">INR {parseFloat(product.price * product.quantity).toFixed(2,)}</span>
+                                    <span className="quantity">QTY: {product.quantity}</span>
+                                    <span className="shp__price">INR {parseFloat(product.price * product.quantity).toFixed(2,)}</span>
                                 </div>
-                                <div class="remove__btn">
+                                <div className="remove__btn">
                                     <a href="#" title="Remove this item"
                                      onClick={() => {
                                         dispatch(removeCartItem(product.id))
@@ -102,7 +103,7 @@ export default function Header() {
                                         dispatch(calculateTax())
                                         dispatch(getTotalAmount())
                                         }}
-                        ><i class="fa fa-close"></i></a>
+                        ><i className="fa fa-close"></i></a>
                                 </div>
                             </div>
                         )
@@ -110,18 +111,27 @@ export default function Header() {
                 }
                 
             </div>
-         
-            
-            <ul class="shoping__total">
-                <li class="subtotal">Subtotal:</li>
-                <li class="total__price">INR {parseFloat(totalAmount).toFixed(2)}</li>
+            <ul className="shoping__total">
+                <li className="subtotal">Subtotal:</li>
+                <li className="total__price">INR {parseFloat(totalAmount).toFixed(2)}</li>
             </ul>
             
 
-            <ul class="shopping__btn">
-                <li><Link  onClick={()=>{  setIsMiniCartShow(false);   }} className="" to="cart">View Cart</Link></li>
-                <li class="shp__checkout"><Link onClick={()=>{  setIsMiniCartShow(false);   }} className="" to="checkout">Checkout</Link></li>
+            <ul className="shopping__btn">
+                <li><Link  onClick={()=>{  setIsMiniCartShow(false);   }} className="" to="/cart">View Cart</Link></li>
+                <li className="shp__checkout"><Link onClick={()=>{  setIsMiniCartShow(false);   }} className="" to="/checkout">Checkout</Link></li>
             </ul>
+
+            </>
+            :
+            <>
+            <div className="shp__cart__wrap">
+            <div className="shp__single__product"> <h2 className="h3 text-center mb-3">Your cart is empty</h2> </div>
+            </div>
+            </>
+            }
+            
+            
         </div>
     </div>
     </>
