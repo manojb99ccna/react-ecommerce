@@ -11,6 +11,8 @@ import Product from './pages/Product';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
 import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="about" element={<About/>} />
 		<Route path="contact" element={<Contact/>} />
 		<Route path="product/:slug" element={<ProductDetails />} />	
+		<Route path="cart" element={<Cart/>} />
+		<Route path="checkout" element={<Checkout/>} />
       </Routes> 
 	 <Footer/>
 

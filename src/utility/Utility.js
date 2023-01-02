@@ -26,11 +26,10 @@ const isNotNullObject = (object) => {
     return !isNullObject(object);
 }
 
-const isEmptyArray = (array) => {
+const isEmptyArray = (array) => { 
     if (isNotNullObject(array) && array.length === 0) {
         return true;
-    }
-
+    } 
     return false;
 }
 

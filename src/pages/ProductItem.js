@@ -1,11 +1,50 @@
 import React from 'react';
 import { isEmptyArray } from '../utility/Utility';
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { addCartProduct, calculateTax, getCartCount, getSubTotal, getTotalAmount } from '../features/useCartSlice';
+import { useGetProductsQuery } from '../features/apiSlice';
 
 function ProductItem(props) {
   let data = props.data; 
   let product_image = '';
    product_image = !isEmptyArray(data.images) ? data.images[0].src : '';
+
+   const dispatch = useDispatch();
+
+   let productObj = {
+    id: '',
+    title: '',
+    price: '',
+    image: '',
+  }
+
+  
+  const addToCart = (item) => {
+    
+     productObj = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: !isEmptyArray(data.images) ? data.images[0].src : '',
+      slug: item.slug,
+    }
+    
+    dispatch(addCartProduct(productObj));
+    dispatch(getCartCount());
+    dispatch(getSubTotal());
+    dispatch(calculateTax());
+    dispatch(getTotalAmount()); 
+  }
+
+  const {
+    data: products,
+    isLoading: isProductLoading,
+    isSuccess: isProductSuccess,
+    isError: isProductError,
+    error: prouctError,
+  } = useGetProductsQuery({ refetchOnMountOrArgChange: true })
+
 
   return (
     <>
@@ -28,7 +67,9 @@ function ProductItem(props) {
                             </a>
                           </li>
                           <li>
-                            <a  data-tip="Add to Cart">
+                            <a  data-tip="Add to Cart"  onClick={() => {
+                  addToCart(data)
+                }} >
                               <i className="fa fa-shopping-cart"></i>
                             </a>
                           </li>

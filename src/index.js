@@ -6,16 +6,33 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import './assets/stylesheet/main.css';
 import LoaderFrame from './components/LoaderFrame';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+import store from './app/store'
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+let persistor = persistStore(store)
+
 root.render(
+  <Provider store={store}>
+  <PersistGate persistor={persistor}>
+  <React.StrictMode>
+    <App />
+    <LoaderFrame/>
+  </React.StrictMode>
+  </PersistGate>
+  </Provider>
+);
+
+
+/* root.render(
   <React.StrictMode>
     <App />
     <LoaderFrame/>
   </React.StrictMode>
 );
+ */
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
