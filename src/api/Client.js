@@ -46,7 +46,7 @@ export const Client = {
 
     postWithLoader: (endpoint, input, isBearer, successCallback, failureCallback = () => { }) => {
         Emitter.emit(EventName.GLOBAL_LOADER.SHOW);
-        axios.post(endpoint, input, Client.getHeaders(isBearer))
+        axios.post(endpoint, input)
             .then((response) => {
                 Emitter.emit(EventName.GLOBAL_LOADER.HIDE);
                 successCallback(response);
