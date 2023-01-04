@@ -5,4 +5,6 @@ export const Endpoint = {
     GET_CATEGORY_LISTING_FILTER: HOST + "/wp-json/wc/v3/products/categories",
     SUBMIT_CONTACT_FORM: HOST + "/wp-json/contact-form-7/v1/contact-forms/2190/feedback",
 
+    HOME_SLIDER_LIST: HOST + "/wp-json/react/v1/slider",
+
 }

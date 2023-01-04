@@ -27,3 +27,25 @@ code {
 .min-height-1{
   min-height: 760px;
 }
+
+/*slider*/
+.carousel-control-prev-icon, .carousel-control-next-icon{
+  background-color: #c43b68;
+  border-radius: 100%;
+  height: 42px !important;
+  width: 42px !important;
+  background-size: 76% !important;
+}
+.bg-gray{
+  background-color: #f3f3f3;
+}
+.text-left {
+  text-align: left !important;
+}
+.carousel-inner {
+  padding-top: 26px;
+}
+.slide__thumb img {
+  max-width: 360px;
+  padding-bottom: 21px;
+}
