@@ -9,6 +9,8 @@ function Home() {
 
   return (
     <>
+
+
       <Container className="main-container min-height-1 mt-5 ">
         <h1 className="d-flex justify-content-center mt-3">
           <span className="text text-center">Find your best product</span>

@@ -3,51 +3,51 @@ import { useForm } from 'react-hook-form';
 import { Link } from "react-router-dom";
 import { Client } from "../api/Client";
 import { Endpoint } from "../Events/Endpoint";
+import StringUtils from "../utility/StringUtils";
 import banner_image from "./../assets/images/backgound.jpg";
 
 function Contact() {
 
     const [successMessage, setSuccess] = useState(false);
+    const [errMessage, setError] = useState('');
 
     const { register,handleSubmit,formState: { errors },} = useForm();
     
     const onSubmit = (data) => {
         console.log(data);
-
-        let url = Endpoint.SUBMIT_CONTACT_FORM;
-
-
-        /* let inputJSON = {
-            "_wpcf7": "2190",
-            "_wpcf7_version":"5.7.2",
-            "_wpcf7_locale": "en_US",
-            "_wpcf7_unit_tag": "wpcf7-f2190-p2-o1",
-            "_wpcf7_container_post": "2",
-            "_wpcf7_posted_data_hash": "",
-            "Firstname": data.Firstname,
-            "Lastname": data.Lastname,
-            "Phone": data.Phone,
-            "Email": data.Email,
-            "Message": data.Message
-        } */
         
-        
-        var data = new FormData();
-        data.append('_wpcf7', '2190');
-        data.append('_wpcf7_version', '5.7.2');
-        data.append('_wpcf7_locale', 'en_US');
-        data.append('_wpcf7_unit_tag', ' wpcf7-f2190-p2-o1');
-        data.append('_wpcf7_container_post', ' 2');
-        data.append('_wpcf7_posted_data_hash', ' ');
-        data.append('Firstname', data.Firstname);
-        data.append('Lastname', data.Lastname);
-        data.append('Phone', data.Phone);
-        data.append('Email', data.Email);
-        data.append('Message',data.Message);
 
-      Client.postWithLoader(url, data, true, (response) => {
+        let url = Endpoint.SUBMIT_CONTACT_FORM; 
         
-        setSuccess(true);
+        var inputJSON = new FormData();
+        inputJSON.append('_wpcf7', '2190');
+        inputJSON.append('_wpcf7_version', '5.7.2');
+        inputJSON.append('_wpcf7_locale', 'en_US');
+        inputJSON.append('_wpcf7_unit_tag', ' wpcf7-f2190-p2-o1');
+        inputJSON.append('_wpcf7_container_post', ' 2');
+        inputJSON.append('_wpcf7_posted_data_hash', ' ');
+        inputJSON.append('Firstname', data.Firstname);
+        inputJSON.append('Lastname', data.Lastname);
+        inputJSON.append('Phone', data.Phone);
+        inputJSON.append('Email', data.Email);
+        inputJSON.append('Message',data.Message);
+
+      Client.postWithLoader(url, inputJSON, true, (response) => {
+        
+          console.log(response.data.status);
+
+          if(StringUtils.isNotEmpty(response.data.status)){
+            if(response.data.status == 'mail_sent'){
+              setSuccess(true);
+            }else{
+              setError(response.data.message);
+              setTimeout(() => {
+                setError("");
+              }, 3000);
+
+            }
+          } 
+        
         
         },
         (error) => {
@@ -109,7 +109,7 @@ function Contact() {
                   <input
                     type="text"
                     id="Firstname"
-                    
+                    placeholder="Enter your first name" 
                     className="form-control"
                     {...register("Firstname", { required: true, maxLength: 10 })}
                   />
@@ -131,6 +131,7 @@ function Contact() {
                   <input
                     type="text"
                     id="Lastname"
+                    placeholder="Enter your last name" 
                     className="form-control"
                     {...register("Lastname", { required: true, maxLength: 10 })}
                   />
@@ -150,8 +151,8 @@ function Contact() {
               </label>
               <input
                 type="email"
-                id="Email"
-                name="Email"
+                id="Email" 
+                placeholder="Enter your email id" 
                 className="form-control"
                 {...register("Email",
                 {
@@ -173,8 +174,8 @@ function Contact() {
               </label>
               <input
                 type="number"
-                id="Phone"
-                name="Phone"
+                id="Phone" 
+                placeholder="Enter your Phone number" 
                 className="form-control"
                 {...register("Phone", { required: true, maxLength: 10, minLength: 10 })}
               />
@@ -196,7 +197,7 @@ function Contact() {
               <textarea
                 className="form-control"
                 id="Message"
-                name="Message"
+                placeholder="Enter your Message description" 
                 rows="4"
                 {...register("Message", { required: true, maxLength: 300, minLength: 30 })}
               ></textarea>
@@ -210,6 +211,10 @@ function Contact() {
                     <span className="text-danger" role="alert">Message should not be more than 300 character.</span>
                 )} 
             </div>
+
+             
+              {(errMessage != "") && <div className="col-sm-12 alert-danger alert">{errMessage}</div> }
+               
 
             <button type="submit" className="btn btn-primary btn-block mb-4">
               Submit
