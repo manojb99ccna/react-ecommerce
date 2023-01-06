@@ -106,11 +106,11 @@ function Cart() {
                       </div>
                     </td>
                     <td className="col-sm-1 col-md-1 text-center">
-                      <strong>{product.price}</strong>
+                      <strong>INR {product.price}</strong>
                     </td>
                     <td className="col-sm-1 col-md-1 text-center">
                       <strong>
-                        {parseFloat(product.price * product.quantity).toFixed(
+                       INR {parseFloat(product.price * product.quantity).toFixed(
                           2,
                         )}
                       </strong>
@@ -142,7 +142,7 @@ function Cart() {
             <div className="col-md-6 p-4 offset-md-6 border alert alert-secondary">
                 
                 <div className="d-flex gst">
-                <div className="flex-grow-1">Subtotal</div>$
+                <div className="flex-grow-1">Subtotal</div>INR
                 {parseFloat(subAmount).toFixed(2)}
                 </div>
                 <hr />
@@ -151,7 +151,7 @@ function Cart() {
                     <strong>Total Amount</strong>
                 </div>
                 <div>
-                    <strong>${parseFloat(totalAmount).toFixed(2)}</strong>
+                    <strong>INR {parseFloat(totalAmount).toFixed(2)}</strong>
                 </div>
                 </div>
                 <div className="d-grid mt-3">

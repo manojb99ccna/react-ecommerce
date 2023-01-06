@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import Emitter from '../Events/Emitter'
+import EventName from '../Events/EventName'
 
 const useCartSlice = createSlice({
   name: 'cart',
@@ -21,6 +23,9 @@ const useCartSlice = createSlice({
           let tempProduct = { ...action.payload, quantity: 1 }
           state.cartItems.push(tempProduct)
         }
+
+        Emitter.emit(EventName.ALERT_MESSAGE.SUCCESS); 
+
       },
     },
     getCartProducts: (state, action) => {
