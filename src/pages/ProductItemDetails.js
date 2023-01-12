@@ -9,6 +9,7 @@ import {
   getSubTotal,
   getTotalAmount,
 } from "../features/useCartSlice";
+import { addWishlistProduct, getWishlistCount } from "../features/useWishlistSlice";
 
 function ProductItemDetails(props) {
   let ProductDetails = props.data;
@@ -51,7 +52,23 @@ function ProductItemDetails(props) {
     dispatch(getSubTotal());
     dispatch(calculateTax());
     dispatch(getTotalAmount());
+  }; 
+  
+  const addToWishlist = (item) => {
+    productObj = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: !isEmptyArray(ProductDetails.images)
+        ? ProductDetails.images[0].src
+        : "",
+      slug: item.slug,
+    };
+
+    dispatch(addWishlistProduct(productObj));
+    dispatch(getWishlistCount());     
   };
+
 
   return (
     <>
@@ -77,7 +94,9 @@ function ProductItemDetails(props) {
           <div className="p-3 right-side">
             <div className="d-flex justify-content-between align-items-center">
               <h2>{ProductDetails.name}</h2>{" "}
-              <span className="heart">
+              <span role="button" className="heart"  onClick={() => {
+                  addToWishlist(ProductDetails);
+                }} >
                 <i className="fa fa-heart"></i>
               </span>
             </div>
@@ -88,7 +107,9 @@ function ProductItemDetails(props) {
             <h2> INR {ProductDetails.price}</h2>
 
             <div className="buttons d-flex flex-row mt-5 gap-3">
-              <button className="btn btn-outline-dark btn-lg ">
+              <button className="btn btn-outline-dark btn-lg "  onClick={() => {
+                  addToWishlist(ProductDetails);
+                }}>
                 Add to Wishlist
               </button>
               <button

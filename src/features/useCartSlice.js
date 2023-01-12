@@ -24,7 +24,7 @@ const useCartSlice = createSlice({
           state.cartItems.push(tempProduct)
         }
 
-        Emitter.emit(EventName.ALERT_MESSAGE.SUCCESS); 
+        Emitter.emit(EventName.ALERT_MESSAGE.SUCCESS,{ message: "Success: You have added product to your shopping cart!"}); 
 
       },
     },

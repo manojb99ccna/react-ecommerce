@@ -4,6 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { combineReducers } from '@reduxjs/toolkit'
  
 import useCartReducer from '../features/useCartSlice'
+import useWishlistReducer from '../features/useWishlistSlice'
 
 import storage from 'redux-persist/lib/storage'
 
@@ -24,7 +25,8 @@ const persistConfig = {
 }
 
 export const rootReducers = combineReducers({
-  cart: useCartReducer 
+  cart: useCartReducer ,
+  wishList: useWishlistReducer 
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)

@@ -7,13 +7,15 @@ class AlertMessage extends React.Component {
     super(props);
     this.state = {
       successMessage: false,
+      message:'',
     };
   }
 
   componentDidMount() {
 
-    Emitter.on(EventName.ALERT_MESSAGE.SUCCESS, (object) => {
-        this.setState({ successMessage: true }); 
+    Emitter.on(EventName.ALERT_MESSAGE.SUCCESS, (object) => {        
+
+        this.setState({ successMessage: true, message: (object.message) ? object.message : '' }); 
         this.hideMessage(3000);
     });
 
@@ -37,7 +39,7 @@ class AlertMessage extends React.Component {
             <div className="alert alert-success alert-dismissible">
               <i className="fa fa-exclamation-circle"></i>
 
-               &nbsp; Product added successfully.
+               &nbsp; {this.state.message}
 
               <button
                 type="button"

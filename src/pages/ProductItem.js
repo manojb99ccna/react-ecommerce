@@ -3,6 +3,7 @@ import { isEmptyArray } from '../utility/Utility';
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { addCartProduct, calculateTax, getCartCount, getSubTotal, getTotalAmount } from '../features/useCartSlice'; 
+import { addWishlistProduct, getWishlistCount } from '../features/useWishlistSlice';
 
 function ProductItem(props) {
   let data = props.data; 
@@ -16,6 +17,7 @@ function ProductItem(props) {
     title: '',
     price: '',
     image: '',
+    slug: '',
   }
 
   
@@ -36,6 +38,19 @@ function ProductItem(props) {
     dispatch(getTotalAmount()); 
   }
 
+  const addToWishlist = (item) => {
+    productObj = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: !isEmptyArray(data.images) ? data.images[0].src : '',
+      slug: item.slug,
+    }
+
+    dispatch(addWishlistProduct(productObj));
+    dispatch(getWishlistCount());
+     
+  };
   
 
   return (
@@ -54,7 +69,7 @@ function ProductItem(props) {
                           </li>
 
                           <li>
-                            <a  data-tip="Add to Wishlist">
+                            <a  data-tip="Add to Wishlist"  onClick={() => {   addToWishlist(data) }}>
                               <i className="fa fa-shopping-bag"></i>
                             </a>
                           </li>
