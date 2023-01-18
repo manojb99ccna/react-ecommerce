@@ -129,8 +129,9 @@ class Product extends React.Component {
                 */}
 
               
-
+              
               <div className="side-bar side-bar--filter" attr-val="category">
+                {/* 
                 <div>
                   <a
                     type="button"
@@ -141,7 +142,9 @@ class Product extends React.Component {
                     Clear filter
                   </a>
                 </div>
-                <br />
+                
+              */}
+              <br />
  
 
                 <h5 className="title">Category</h5>
