@@ -17,7 +17,7 @@ function ProductDetails() {
   console.log("slug = ", slug);
 
   useEffect(() => {
-    const url = Endpoint.GET_PRODUCT_LISTING + `?slug=${slug}`;
+    const url = Endpoint.GET_PRODUCT_LISTING + `&slug=${slug}`;
     console.log(url);
 
     Client.getWithLoader(

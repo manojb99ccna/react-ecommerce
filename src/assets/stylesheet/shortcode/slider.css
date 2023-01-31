@@ -21,14 +21,18 @@
     letter-spacing: 1px;
     line-height: 27px;
 }
+ 
+
 .slider__inner h1 {
-    color: #030303;
-    font-family: Old Standard TT;
-    font-size: 60px;
-    margin-bottom: 14px;
-    margin-top: 31px;
-    text-transform: uppercase;
+  color: #171054; 
+  font-size: 60px;
+  margin-bottom: 14px;
+  margin-top: 130px;
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 74px;
 }
+
 .cr__btn a {
     background: #c43b68 none repeat scroll 0 0;
     color: #fff;

@@ -69,12 +69,12 @@ function ProductItem(props) {
                           </li>
 
                           <li>
-                            <a  data-tip="Add to Wishlist"  onClick={() => {   addToWishlist(data) }}>
+                            <a  data-tip="Add to Wishlist" role="button"  onClick={() => {   addToWishlist(data) }}>
                               <i className="fa fa-shopping-bag"></i>
                             </a>
                           </li>
                           <li>
-                            <a  data-tip="Add to Cart"  onClick={() => {
+                            <a  data-tip="Add to Cart" role="button" onClick={() => {
                   addToCart(data)
                 }} >
                               <i className="fa fa-shopping-cart"></i>
@@ -100,7 +100,9 @@ function ProductItem(props) {
                           
 
                         </div>
-                        <a className="add-to-cart">
+                        <a className="add-to-cart  " role="button" onClick={() => {
+                  addToCart(data)
+                }}>
                           + Add To Cart
                         </a>
                       </div>

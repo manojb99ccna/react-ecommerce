@@ -11,7 +11,7 @@ export default function Footer() {
                  <div className="row">
                      <div className="col-xs-12">
                          <div className="copyrigcod__inner">
-                             <p>Copyright© <a href="#">Test website</a> 2022. All right reserved.</p>
+                             <p>Copyright© <a href="#">ShoppingHart.com</a> 2023. All right reserved.</p>
                               
                          </div>
                      </div>

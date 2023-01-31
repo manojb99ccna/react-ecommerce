@@ -33,7 +33,7 @@ class Product extends React.Component {
 
 
   filterSidebar(){  
-    const url = Endpoint.GET_CATEGORY_LISTING_FILTER +`?page=${ this.currentPageCat }&per_page=${this.totalPagesCat}`;  
+    const url = Endpoint.GET_CATEGORY_LISTING_FILTER +`&page=${ this.currentPageCat }&per_page=${this.totalPagesCat}`;  
     Client.getWithLoader(url,(response) => {
         this.setState({categoryFilter: response.data});
       },
@@ -44,7 +44,7 @@ class Product extends React.Component {
   }
 
   filterProduct(){    
-    let url = Endpoint.GET_PRODUCT_LISTING +`?page=${ this.currentPage }&per_page=${this.totalPages}`; 
+    let url = Endpoint.GET_PRODUCT_LISTING +`&page=${ this.currentPage }&per_page=${this.totalPages}`; 
     if(StringUtils.isNotEmpty(this.state.filterInputCategory)){
        url = url +`&category=${ this.state.filterInputCategory }`; 
     } 

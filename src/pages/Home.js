@@ -17,7 +17,7 @@ function Home() {
   }, []);
 
   function getLatestProduct() {
-    let url = Endpoint.GET_PRODUCT_LISTING + `?page=1&per_page=12`;
+    let url = Endpoint.GET_PRODUCT_LISTING + `&page=1&per_page=12`;
     Client.getWithLoader(
       url,
       (response) => {

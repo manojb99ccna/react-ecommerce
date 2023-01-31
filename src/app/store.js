@@ -5,6 +5,7 @@ import { combineReducers } from '@reduxjs/toolkit'
  
 import useCartReducer from '../features/useCartSlice'
 import useWishlistReducer from '../features/useWishlistSlice'
+import useUserSlice from '../features/useUserSlice'
 
 import storage from 'redux-persist/lib/storage'
 
@@ -26,7 +27,8 @@ const persistConfig = {
 
 export const rootReducers = combineReducers({
   cart: useCartReducer ,
-  wishList: useWishlistReducer 
+  wishList: useWishlistReducer,
+  user: useUserSlice  
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducers)

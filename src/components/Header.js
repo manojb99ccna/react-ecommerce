@@ -13,6 +13,8 @@ export default function Header() {
     const dispatch = useDispatch();
     const { totalCount, cartItems, subAmount, tax, totalAmount } = useSelector((state) => state.cart);
     const { totalWishlistCount } = useSelector((state) => state.wishList);
+    const { UserLoginData } = useSelector((state) => state.user);
+
     const [isMiniCartShow, setIsMiniCartShow] = useState(false);
 
     
@@ -51,6 +53,12 @@ export default function Header() {
                         </div>
                         <div className="col-md-3 col-lg-2 col-sm-4 col-xs-4">
                             <div className="header__right"> 
+
+
+                                <div className="header__account">
+                                 <Link  to={ (!isEmptyArray(UserLoginData)) ? '/dashboard' : '/login'} ><i className="icon-user icons"></i></Link>
+                                </div>    
+
                                 <div className="cod__shopping__cart "> 
                                     <Link to="/wishlist"  className="cart__menu" ><i className="fa fa-heart"></i></Link> 
                                     <Link to="/wishlist"  className="cart__menu" ><span className="cod__qua">{totalWishlistCount}</span></Link>
