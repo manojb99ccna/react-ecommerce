@@ -16,12 +16,7 @@ function Order() {
     const navigate = useNavigate(); 
     const { UserLoginData, LoginId } = useSelector((state) => state.user);
 
-    const [orderListing, setOrderListing] = useState([]);
-
- 
-    console.log("UserLoginData: ",UserLoginData);
-    console.log("LoginId: ",LoginId);
-
+    const [orderListing, setOrderListing] = useState([]); 
 
     useEffect(() => { 
       if(isEmptyArray(UserLoginData)){
@@ -107,7 +102,7 @@ function Order() {
 
                         orderListing.map((value, key) => (
 
-                        <tr>
+                        <tr key={key}>
                         <td className="text-right">#{value.id}</td>
                         <td className="text-left">{value.billing.first_name}</td>
                         

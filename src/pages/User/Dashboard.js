@@ -19,16 +19,7 @@ function Dashboard() {
     console.log("LoginId: ",LoginId);
 
 
-    useEffect(() => {
-
-      if(isEmptyArray(UserLoginData)){
-
-        navigate('/login');
-
-
-      }
-      
-    });
+    
 
    
 
@@ -74,7 +65,7 @@ function Dashboard() {
 
             <div  className="col-sm-9 pt-1 ">
 
-              <h2>Welcome back {UserLoginData.username} </h2>  
+              <h2>Welcome back {!isEmptyArray(UserLoginData) && UserLoginData.data.display_name} </h2>  
 
 
             </div>

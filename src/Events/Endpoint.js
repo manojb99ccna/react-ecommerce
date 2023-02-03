@@ -12,6 +12,7 @@ export const Endpoint = {
 
     /* USER LOGIN */
     USER_LOGIN: HOST + "/wp-json/custom-plugin/login?consumer_key="+consumer_key+"&consumer_secret="+consumer_secret,
+    USER_REG: HOST + "/wp-json/custom-plugin/users/register?consumer_key="+consumer_key+"&consumer_secret="+consumer_secret,
 
     GET_ORDER_LISTING: HOST + "/wp-json/wc/v3/orders?consumer_key="+consumer_key+"&consumer_secret="+consumer_secret, 
 

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Client } from "../../api/Client";
+import Emitter from "../../Events/Emitter";
 import { Endpoint } from "../../Events/Endpoint"; 
+import EventName from "../../Events/EventName";
 import { addLoginUser } from "../../features/useUserSlice";
 
 import banner_image from "./../../assets/images/backgound.jpg";
@@ -11,6 +13,9 @@ import banner_image from "./../../assets/images/backgound.jpg";
 function Signup() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    let location = useLocation();
+
     const { UserLoginData } = useSelector((state) => state.user);
 
     const { register,handleSubmit,formState: { errors },} = useForm();
@@ -19,9 +24,13 @@ function Signup() {
     const onSubmit = (data) => {
         console.log(data);
         
-        let url = Endpoint.USER_LOGIN; 
+        let url = Endpoint.USER_REG; 
         let inputjson = {
-            "username": data.Email,
+          "first_name": data.first_name,
+          "last_name": data.last_name,  
+          
+          "username": data.Email,
+            "email": data.Email,
             "password": data.Password             
           }
 
@@ -34,7 +43,10 @@ function Signup() {
 
                   //dispatch(addLoginUser(inputjson));
 
-                   
+
+                  Emitter.emit(EventName.ALERT_MESSAGE.SUCCESS,{ message: "Success: Registration successfully. Please login to access your data."}); 
+                  
+                  (location.pathname=='/checkout/signup') ? navigate('/checkout/login') : navigate('/login');
 
 
                 }else{
@@ -96,6 +108,50 @@ function Signup() {
             <form className="Auth-form" onSubmit={handleSubmit(onSubmit)}  >
               <div className="Auth-form-content">
                 <h3 className="Auth-form-title">Signup </h3>
+
+
+
+                <div className="form-group mt-3">
+                  <label>First name</label>
+                  <input
+                        type="text"
+                        id="first_name" 
+                        placeholder="Enter First name" 
+                        className="form-control"
+                        {...register("first_name", { required: true, maxLength: 25, minLength: 3 })}
+                    />
+                    {errors.first_name && errors.first_name.type === "required" && (
+                    <span className="text-danger" role="alert">This is required</span>
+                    )}
+                    {errors.first_name && errors.first_name.type === "minLength" && (
+                        <span className="text-danger" role="alert">First name should be atleast 6 digit.</span>
+                    )} 
+                    {errors.first_name && errors.first_name.type === "maxLength" && (
+                        <span className="text-danger" role="alert">Max length exceeded</span>
+                    )} 
+                </div>
+
+                <div className="form-group mt-3">
+                  <label>Last name</label>
+                  <input
+                        type="text"
+                        id="last_name" 
+                        placeholder="Enter Last name" 
+                        className="form-control"
+                        {...register("last_name", { required: true, maxLength: 25, minLength: 3 })}
+                    />
+                    {errors.last_name && errors.last_name.type === "required" && (
+                    <span className="text-danger" role="alert">This is required</span>
+                    )}
+                    {errors.last_name && errors.last_name.type === "minLength" && (
+                        <span className="text-danger" role="alert">Last name should be atleast 6 digit.</span>
+                    )} 
+                    {errors.last_name && errors.last_name.type === "maxLength" && (
+                        <span className="text-danger" role="alert">Max length exceeded</span>
+                    )} 
+                </div>
+
+
                 <div className="form-group mt-3">
                   <label>Email address</label>
                   <input

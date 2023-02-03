@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Client } from "../../api/Client";
 import { Endpoint } from "../../Events/Endpoint"; 
 import { addLoginUser } from "../../features/useUserSlice";
@@ -12,14 +12,15 @@ function Login() {
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    let location = useLocation();
 
     const { UserLoginData } = useSelector((state) => state.user);
 
     const { register,handleSubmit,formState: { errors },} = useForm();
     const [errMessage, setErrMessage] = useState('');
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = (data) => { 
+        
         
         let url = Endpoint.USER_LOGIN; 
         let inputjson = {
@@ -29,14 +30,18 @@ function Login() {
 
           Client.postWithLoader(url, inputjson, true, (response) => {        
                 
-                console.log("response = ",response); 
+                 
 
                 if(response.data.status == true){ 
 
                   inputjson.LoginId = response.data.user_id;
+                  inputjson.data = response.data.return.data;
+
+
                   dispatch(addLoginUser(inputjson)); 
 
-                  navigate('/dashboard');
+                  (location.pathname=='/checkout/login') ? navigate('/checkout') : navigate('/dashboard');
+                  
                    
 
                 }else{
@@ -149,11 +154,11 @@ function Login() {
                  <div className="row">
                   
                   <p className="col-sm-6 forgot-password  mt-2">
-                      <Link to="/signup">For Signup</Link>
+                      <Link to={(location.pathname=='/checkout/login') ? navigate('/checkout/signup') : navigate('/signup')} >For Signup</Link>
                   </p>
 
                   <p className="col-sm-6 forgot-password text-right mt-2">
-                     <Link to="/password">Forgot password?</Link>
+                     <Link to="#">Forgot password?</Link>
                   </p>
 
                   </div>     

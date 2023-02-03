@@ -16,12 +16,8 @@ function OrderDetails() {
   const { UserLoginData, LoginId } = useSelector((state) => state.user);
 
   const { id } = useParams();
-
   const [orderListing, setOrderListing] = useState([]);
-
-  console.log("UserLoginData: ", UserLoginData);
-  console.log("LoginId: ", LoginId);
-  console.log("id: ", id);
+ 
 
   useEffect(() => {
     if (isEmptyArray(UserLoginData)) {
@@ -108,14 +104,14 @@ function OrderDetails() {
                       <tbody>
                         <tr>
                           <td className="text-left">
-                            <b>Order ID:</b> #1
+                            <b>Order ID:</b> #{orderListing.id}
                             <br />
-                            <b>Date Added:</b> 31/01/2023
+                            <b>Date Added:</b> {orderListing.date_created}
                           </td>
                           <td className="text-left">
-                            <b>Payment Method:</b> Cash On Delivery
+                            <b>Payment Method:</b>{" "}
+                            {orderListing.payment_method_title}
                             <br />
-                            <b>Shipping Method:</b> Flat Shipping Rate
                           </td>
                         </tr>
                       </tbody>
@@ -130,14 +126,95 @@ function OrderDetails() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td className="text-left"></td>
+                          <td className="text-left">
+                            {orderListing.billing.first_name}{" "}
+                            {orderListing.billing.last_name}
+                            <br />
+                            {orderListing.billing.address_1}{" "}
+                            {orderListing.billing.address_2}
+                            <br />
+                            {orderListing.billing.city}
+                            <br />
+                            {orderListing.billing.state}{" "}
+                            {orderListing.billing.postcode}{" "}
+                            {orderListing.billing.country}
+                            <br />
+                            {orderListing.billing.email}
+                            <br />
+                            {orderListing.billing.phone}
+                          </td>
 
-                          <td className="text-left"></td>
+                          <td className="text-left">
+                            {orderListing.shipping.first_name}{" "}
+                            {orderListing.shipping.last_name}
+                            <br />
+                            {orderListing.shipping.address_1}{" "}
+                            {orderListing.shipping.address_2}
+                            <br />
+                            {orderListing.shipping.city}
+                            <br />
+                            {orderListing.shipping.state}{" "}
+                            {orderListing.shipping.postcode}{" "}
+                            {orderListing.shipping.country}
+                            <br />
+                            {orderListing.shipping.email}
+                            <br />
+                            {orderListing.shipping.phone}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
 
-                    
+                    <table className="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th className="text-left">Item</th>
+                          <th className="text-right">Cost</th>
+                          <th className="text-left">Qty</th>
+                          <th className="text-left">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {!isEmptyArray(orderListing.line_items) &&
+                          orderListing.line_items.map((value, key) => (
+                            <tr key={key}>
+                              <td className="text-left">{value.name}</td>
+                              <td className="text-right">{orderListing.currency}  {value.price}</td>
+                              <td className="text-left">{value.quantity}</td>
+                              <td className="text-left">{orderListing.currency}  {value.total}</td>
+                            </tr>
+                          ))}
+
+                        {!isEmptyArray(orderListing.shipping_lines) &&
+                          orderListing.shipping_lines.map((value, key) => (
+                            <tr key={key + 1001}>
+                              <td colSpan={3} className="text-left">
+                                {value.method_title}
+                              </td>
+
+                              <td className="text-left">{orderListing.currency}  {value.total}</td>
+                            </tr>
+                          ))}
+
+                        <tr>
+                          <td colSpan={3} className="text-left"></td>
+
+                          <td className="text-left">
+                            <strong>Item Subtotal :</strong>
+                            {orderListing.currency}  {(orderListing.total-orderListing.shipping_total)}
+                            <br />
+
+                            <strong>Shipping: </strong>
+                            {orderListing.currency}  {orderListing.shipping_total}
+                            <br />
+ 
+
+                            
+                            <strong>Total: </strong>{orderListing.currency} {orderListing.total}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </>
                 ) : (
                   <h3 className="text-center">No order found.</h3>

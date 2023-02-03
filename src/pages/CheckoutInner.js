@@ -7,7 +7,7 @@ import { Endpoint } from '../Events/Endpoint';
 import { calculateTax, getCartCount, getCartProducts, getSubTotal, getTotalAmount, removeCartItem } from '../features/useCartSlice';
 import StringUtils from '../utility/StringUtils';
 import { isEmptyArray } from '../utility/Utility';
-import banner_image from './../assets/images/backgound.jpg';
+
 
  function CheckoutInner() {
 
@@ -18,6 +18,7 @@ import banner_image from './../assets/images/backgound.jpg';
     const { cartItems, subAmount, tax, totalAmount } = useSelector(
         (state) => state.cart,
     ) 
+    const { UserLoginData, LoginId } = useSelector((state) => state.user);
 
     useEffect(() => {
         dispatch(getCartProducts())
@@ -100,6 +101,7 @@ import banner_image from './../assets/images/backgound.jpg';
                     "payment_method": "razorpay",
                     "payment_method_title": "Credit Card/Debit Card/NetBanking",
                     "status": "processing",
+                    "customer_id": LoginId,
                   
                     "billing": {
                       "first_name": data.first_name,
@@ -188,23 +190,7 @@ import banner_image from './../assets/images/backgound.jpg';
 
   return (
     <>
-     <div className="cod__bradcaump__area" style={{ backgroundImage: `url(${banner_image})`, backgroundRepeat: "no-repeat" ,backgroundSize: "cover" }} >
-        <div className="cod__bradcaump__wrap">
-            <div className="container">
-                <div className="row">
-                    <div className="col-xs-12">
-                        <div className="bradcaump__inner">
-                            <nav className="bradcaump-inner">
-                             <Link className="breadcrumb-item" to="/">Home</Link> 
-                            <span className="brd-separetor"><i className="icon icon-arrow-right"></i></span>
-                            <span className="breadcrumb-item active">Checkout</span>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  
+    
     
     
     <div className="wrapper mtb--40">
@@ -235,6 +221,7 @@ import banner_image from './../assets/images/backgound.jpg';
                         placeholder="Enter your first name" 
                         className="form-control"
                         {...register("first_name", { required: true, maxLength: 10 })}
+                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.first_name}
                       />
                      
                         {errors.first_name && errors.first_name.type === "required" && (
@@ -257,6 +244,7 @@ import banner_image from './../assets/images/backgound.jpg';
                         placeholder="Enter your last name" 
                         className="form-control"
                         {...register("last_name", { required: true, maxLength: 10 })}
+                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.last_name}
                       />
                       {errors.last_name && errors.last_name.type === "required" && (
                         <span className="text-danger" role="alert">This is required</span>
@@ -267,7 +255,7 @@ import banner_image from './../assets/images/backgound.jpg';
                     </div>
                   </div>
                 </div>
-    
+                
                 <div className="row mb-4">
                   <div className="col">
                     <div className="form-outline mb-4">
@@ -279,6 +267,7 @@ import banner_image from './../assets/images/backgound.jpg';
                         id="email" 
                         placeholder="Enter your email id" 
                         className="form-control"
+                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.user_email}
                         {...register("email",
                         {
                             required: true,
@@ -304,6 +293,7 @@ import banner_image from './../assets/images/backgound.jpg';
                         id="phone" 
                         placeholder="Enter your Phone number" 
                         className="form-control"
+                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.phone}
                         {...register("phone", { required: true, maxLength: 10, minLength: 10 })}
                     />
                     {errors.phone && errors.phone.type === "required" && (
