@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { calculateTax, decrement, getCartCount, getCartProducts, getSubTotal, getTotalAmount, increment, removeCartItem } from '../features/useCartSlice';
@@ -8,7 +8,7 @@ import banner_image from './../assets/images/backgound.jpg';
 function Cart() {
 
     const dispatch = useDispatch()
-    const { cartItems, subAmount, tax, totalAmount } = useSelector(
+    const { cartItems, subAmount,  totalAmount } = useSelector(
         (state) => state.cart,
     )
 
@@ -20,7 +20,7 @@ function Cart() {
         dispatch(getTotalAmount())
       }, [dispatch])
     
-      let showCart
+     
 
   return (
     <>

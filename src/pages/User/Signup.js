@@ -203,7 +203,7 @@ function Signup() {
                  <div className="row">
                   
                   <p className="col-sm-12 forgot-password text-right mt-2">
-                    For  <Link to="/login"> Login</Link>
+                      <Link to={(location.pathname=='/checkout/signup') ? '/checkout/login' : '/login'} >For Login</Link>
                   </p>
  
 

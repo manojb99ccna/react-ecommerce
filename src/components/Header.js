@@ -1,17 +1,17 @@
 import logo from './../assets/images/logo/logo.png';
-import React, { Component, useState } from 'react';
+import React, {  useState } from 'react';
 import Navigation from './Navigation';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isEmptyArray } from '../utility/Utility';
 import { useDispatch } from 'react-redux';
-import { addCartProduct, calculateTax, getCartCount, getSubTotal, getTotalAmount, removeCartItem } from '../features/useCartSlice';
+import { calculateTax, getCartCount, getSubTotal, getTotalAmount, removeCartItem } from '../features/useCartSlice';
 
 
 export default function Header() {
 
     const dispatch = useDispatch();
-    const { totalCount, cartItems, subAmount, tax, totalAmount } = useSelector((state) => state.cart);
+    const { totalCount, cartItems,  totalAmount } = useSelector((state) => state.cart);
     const { totalWishlistCount } = useSelector((state) => state.wishList);
     const { UserLoginData } = useSelector((state) => state.user);
 
@@ -94,7 +94,7 @@ export default function Header() {
 
                     cartItems.map((product, index) => {
                         return (
-                            <div className="shp__single__product">
+                            <div key={index} className="shp__single__product">
                                 <div className="shp__pro__thumb">
                                     <a href="#">
                                         <img src={product.image} alt={product.name} />
@@ -130,7 +130,7 @@ export default function Header() {
 
             <ul className="shopping__btn">
                 <li><Link  onClick={()=>{  setIsMiniCartShow(false);   }} className="" to="/cart">View Cart</Link></li>
-                <li className="shp__checkout"><Link onClick={()=>{  setIsMiniCartShow(false);   }} className="" to="/checkout">Checkout</Link></li>
+                {/* <li className="shp__checkout"><Link onClick={()=>{  setIsMiniCartShow(false);   }} className="" to="/checkout">Checkout</Link></li> */}
             </ul>
 
             </>

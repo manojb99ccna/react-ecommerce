@@ -33,7 +33,7 @@ class AlertMessage extends React.Component {
         <>
           <div
             id="alert"
-            className="position-fixed top-0 end-0 p-3"            
+            className="position-fixed message-top bottom-0 end-0 p-3"            
             style={{zIndex: 9999 }}
           >
             <div className="alert alert-success alert-dismissible">

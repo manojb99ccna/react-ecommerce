@@ -9,7 +9,7 @@ import StringUtils from '../utility/StringUtils';
 import { isEmptyArray } from '../utility/Utility';
 
 
- function CheckoutInner() {
+ function CheckoutInner() {  
 
     const [successMessage, setSuccess] = useState(false);
     const { register,handleSubmit,formState: { errors },} = useForm();
@@ -19,6 +19,12 @@ import { isEmptyArray } from '../utility/Utility';
         (state) => state.cart,
     ) 
     const { UserLoginData, LoginId } = useSelector((state) => state.user);
+
+    const [FirstName, setFirstName] = useState(!isEmptyArray(UserLoginData) ? UserLoginData.data.first_name : '');
+    const [LastName, setLastName] = useState(!isEmptyArray(UserLoginData) ? UserLoginData.data.last_name : '');
+    const [Phone, setPhone] = useState(!isEmptyArray(UserLoginData) ? UserLoginData.data.phone : '');
+    const [Email, setEmail] = useState(!isEmptyArray(UserLoginData) ? UserLoginData.data.user_email : '');
+
 
     useEffect(() => {
         dispatch(getCartProducts())
@@ -198,12 +204,24 @@ import { isEmptyArray } from '../utility/Utility';
 
         {(successMessage) ?
           <div className="alert alert-success pt-5 pb-5 text-center">
-                <h1>Thank you for your order. It has been placed.</h1>
+                <h1>Thank you for your order. It has been placed. <br/>
+                
+                You can view your order history by going to the <br/><Link to='/dashboard'>Dashboard page</Link>.
+
+
+                </h1>
         </div>  
      :
       
         !isEmptyArray(cartItems) ?            
             <>
+
+<div class="row mb-4">
+    <div class="col">
+        <h2 className='mb-2'>Billing/Shipping  Address </h2>
+    </div>
+</div>
+
 
 <form  onSubmit={handleSubmit(onSubmit)} >
             
@@ -221,7 +239,8 @@ import { isEmptyArray } from '../utility/Utility';
                         placeholder="Enter your first name" 
                         className="form-control"
                         {...register("first_name", { required: true, maxLength: 10 })}
-                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.first_name}
+                        value={FirstName}
+                        onChange={e => setFirstName(e.target.value)}
                       />
                      
                         {errors.first_name && errors.first_name.type === "required" && (
@@ -244,7 +263,8 @@ import { isEmptyArray } from '../utility/Utility';
                         placeholder="Enter your last name" 
                         className="form-control"
                         {...register("last_name", { required: true, maxLength: 10 })}
-                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.last_name}
+                        value={LastName}
+                        onChange={e => setLastName(e.target.value)}
                       />
                       {errors.last_name && errors.last_name.type === "required" && (
                         <span className="text-danger" role="alert">This is required</span>
@@ -266,13 +286,15 @@ import { isEmptyArray } from '../utility/Utility';
                         type="email"
                         id="email" 
                         placeholder="Enter your email id" 
-                        className="form-control"
-                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.user_email}
+                        className="form-control" 
                         {...register("email",
                         {
                             required: true,
                             pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                         })}
+
+                        value={Email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                     {errors.email && errors.email.type === "required" && (
                         <span className="text-danger" role="alert">This is required</span>
@@ -292,9 +314,10 @@ import { isEmptyArray } from '../utility/Utility';
                         type="number"
                         id="phone" 
                         placeholder="Enter your Phone number" 
-                        className="form-control"
-                        value={!isEmptyArray(UserLoginData) && UserLoginData.data.phone}
+                        className="form-control" 
                         {...register("phone", { required: true, maxLength: 10, minLength: 10 })}
+                        value={Phone}
+                        onChange={e => setPhone(e.target.value)}
                     />
                     {errors.phone && errors.phone.type === "required" && (
                         <span className="text-danger" role="alert">This is required</span>

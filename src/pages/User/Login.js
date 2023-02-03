@@ -154,19 +154,23 @@ function Login() {
                  <div className="row">
                   
                   <p className="col-sm-6 forgot-password  mt-2">
-                      <Link to={(location.pathname=='/checkout/login') ? navigate('/checkout/signup') : navigate('/signup')} >For Signup</Link>
+                      <Link to={(location.pathname=='/checkout/login') ? '/checkout/signup' : '/signup'} >For Signup</Link>
                   </p>
 
                   <p className="col-sm-6 forgot-password text-right mt-2">
                      <Link to="#">Forgot password?</Link>
                   </p>
 
-                  </div>     
+                  </div>    
+                   
+
+
+  
                 
 
               </div>
 
-              {(errMessage != "") && <div className="col-sm-12 alert-danger alert">{errMessage}</div> }
+              {(errMessage != "") && <div className="mt-1 col-sm-12 alert-danger alert">{errMessage}</div> }
 
             </form>
           </div>
